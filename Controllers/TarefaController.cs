@@ -53,8 +53,6 @@ namespace TodoList.Controllers
                 Id= 1,
                 Descrição = "Estudar Linq",
                 Categoria = _categorias.FirstOrDefault(c => c.Id == 5),
-                DataInicio = new DateOnly(2024, 5, 10),
-                //DataConclusao = new DateOnly(2024, 5, 15),
                 Concluido = false
             },
             new TarefaModel
@@ -62,8 +60,6 @@ namespace TodoList.Controllers
                 Id= 2,
                 Descrição = "Limpar Quarto",
                 Categoria = _categorias.FirstOrDefault(c => c.Id == 3),
-                DataInicio = new DateOnly(2023, 12, 31),
-                //DataConclusao = new DateOnly(2027, 2, 03),
                 Concluido = false
             },
             new TarefaModel
@@ -71,11 +67,114 @@ namespace TodoList.Controllers
                 Id= 3,
                 Descrição = "Ler e-mails",
                 Categoria = _categorias.FirstOrDefault(c => c.Id == 2),
-                DataInicio = new DateOnly(2024, 12, 20),
-                //DataConclusao = new DateOnly(2025, 3, 1),
                 Concluido = false
             },
 
         };
+
+        //----------------------------------------------------------------------------------------
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.Categorias = _categorias;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(TarefaModel tarefa)
+        {
+            if (ModelState.IsValid)
+            {
+                tarefa.Id = _tarefas.Count > 0 ? _tarefas.Max(t => t.Id) + 1 : 1;
+                // Atribuir a categoria selecionada à propriedade Categoria da TarefaModel
+                tarefa.Categoria = _categorias.FirstOrDefault(c => c.Id == tarefa.Categoria.Id);
+                _tarefas.Add(tarefa);
+            }
+            return RedirectToAction("Index");
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        public IActionResult Edit(int id)
+        {
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id == id);
+            if (tarefa == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Categorias = _categorias;
+            return View(tarefa);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TarefaModel tarefa)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingTarefa = _tarefas.FirstOrDefault(t => t.Id == tarefa.Id);
+                if (existingTarefa != null)
+                {
+                    existingTarefa.Descrição = tarefa.Descrição;
+                    existingTarefa.Categoria = _categorias.FirstOrDefault(c => c.Id == tarefa.Categoria.Id);
+                    existingTarefa.DataInicio = tarefa.DataInicio;
+                    existingTarefa.DataConclusao = tarefa.DataConclusao;
+                    existingTarefa.Concluido = tarefa.Concluido;
+                }
+                return RedirectToAction("Index");
+            }
+            return View(tarefa);
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        public IActionResult Delete(int id)
+        {
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id == id);
+            tarefa.Categoria = _categorias.FirstOrDefault(c => c.Id == tarefa.Categoria.Id);
+            if (tarefa == null)
+            {
+                return NotFound();
+            }
+            _tarefas.Remove(tarefa);
+            return RedirectToAction("Index");
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        public IActionResult Details(int id)
+        {
+            ViewBag.Categorias = _categorias;
+
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id==id);
+            tarefa.Categoria = _categorias.FirstOrDefault(c => c.Id == tarefa.Categoria.Id);
+            if(tarefa == null)
+            {
+                return NotFound();
+            }
+            return View(tarefa);
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public IActionResult MarcarConcluida(int id)
+        {
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id == id);
+            if (tarefa != null)
+            {
+                tarefa.Concluido = true;
+            }
+            return RedirectToAction("Index");
+        }
+
+        //----------------------------------------------------------------------------------------
+
+        public IActionResult Concluidas()
+        {
+            var tarefasConcluidas = _tarefas.Where(t => t.Concluido).ToList();
+            return View(tarefasConcluidas);
+        }
+
     }
 }

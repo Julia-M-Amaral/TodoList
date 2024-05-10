@@ -1,0 +1,13 @@
+﻿@model TarefaModel
+
+<h1>Detalhes da Tarefa</h1>
+
+Id: @Model.Id
+Descrição: @Model.Descrição
+Categoria: @Model.Categoria.Nome
+Data de Início: @Model.DataInicio
+Data de Conclusão: @Model.DataConclusao
+Status: @Model.Concluido
+
+
+<a asp-action="Delete" asp-route-id="@Model.Id">Deletar</a>

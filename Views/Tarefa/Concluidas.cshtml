@@ -1,9 +1,9 @@
 ﻿@model List<TarefaModel>
 
-<h2>Lista de Tarefas</h2>
+<h2>Tarefas Concluídas</h2>
 
 <p>
-    <a asp-action="Create">Adicionar Tarefa</a>
+    <a asp-action="Index">Voltar para Lista de Tarefas</a>
 </p>
 
 <table class="table">
@@ -14,7 +14,7 @@
             <th>Categoria</th>
             <th>Data de Início</th>
             <th>Data Final</th>
-            <th>Concluído?</th>
+            <th>Concluído</th>
             <th></th>
         </tr>
     </thead>
@@ -27,19 +27,9 @@
                 <td>@tarefa.Categoria.Nome</td>
                 <td>@tarefa.DataInicio</td>
                 <td>@tarefa.DataConclusao</td>
-                @* <td>@tarefa.Concluido</td> *@
+                <td>Sim</td> <!-- Indicando que a tarefa está concluída -->
                 <td>
-                    @if (!tarefa.Concluido)
-                    {
-                        <form asp-action="MarcarConcluida" asp-route-id="@tarefa.Id" method="post">
-                            <button type="submit">Marcar como Concluída</button>
-                        </form>
-                    }
-                </td>
-                 <td>
                     <a asp-action="Details" asp-route-id="@tarefa.Id">Detalhes</a>
-                    <a asp-action="Edit" asp-route-id="@tarefa.Id">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@tarefa.Id">Deletar</a>
                 </td>
             </tr>
         }
