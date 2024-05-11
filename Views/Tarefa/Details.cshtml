@@ -1,13 +1,62 @@
 ﻿@model TarefaModel
+@{
+    ViewData["Title"] = "Detalhes da Tarefa";
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Tarefa</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/details/details.css" asp-append-version="true"/>
+</head>
+<body>
 
-<h1>Detalhes da Tarefa</h1>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card text-dark bg-light mb-3">
+                    <div class="card-header">
+                        <h1 class=" display-5 card-title text-center">Detalhes da Tarefa</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="descricao">Descrição:</label>
+                            <p id="descricao">@Model.Descrição</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="categoria">Categoria:</label>
+                            <p id="categoria">@Model.Categoria.Nome</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="dataInicio">Data de Início:</label>
+                            <p id="dataInicio">@Model.DataInicio</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="dataConclusao">Data de Conclusão:</label>
+                            <p id="dataConclusao">@Model.DataConclusao</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="status">Status:</label>
+                            <p id="status">@if (Model.Concluido)
+                                {
+                                    <text>Concluído</text>
+                                }
+                                else
+                                {
+                                    <text>Pendente</text>
+                                }</p>
+                        </div>
+                        <a asp-action="AFazer" class="btn btn-secondary">Voltar</a>
+                        <a href="@Url.Action("Delete", new { id = Model.Id })" class="btn btn-danger">Deletar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-Id: @Model.Id
-Descrição: @Model.Descrição
-Categoria: @Model.Categoria.Nome
-Data de Início: @Model.DataInicio
-Data de Conclusão: @Model.DataConclusao
-Status: @Model.Concluido
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-
-<a asp-action="Delete" asp-route-id="@Model.Id">Deletar</a>
+</body>
+</html>

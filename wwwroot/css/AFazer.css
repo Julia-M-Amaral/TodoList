@@ -1,0 +1,18 @@
+﻿.button-width {
+    min-width: 105px;
+    max-width: 105px;
+    text-align: center;
+}
+
+.edit-icon {
+    color: orange;
+}
+
+.info-icon{
+    color:dimgrey
+}
+
+.delete-icon{
+    color:crimson
+}
+

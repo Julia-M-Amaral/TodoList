@@ -1,37 +1,52 @@
 ﻿@model List<TarefaModel>
+@{
+    ViewData["Title"] = "Tarefas Concluídas";
+}
 
-<h2>Tarefas Concluídas</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas Concluídas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-<p>
-    <a asp-action="Index">Voltar para Lista de Tarefas</a>
-</p>
+    <div class="container mt-5">
+        <h2>Tarefas Concluídas</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Data de Início</th>
-            <th>Data Final</th>
-            <th>Concluído</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tarefa in Model)
-        {
-            <tr>
-                <td>@tarefa.Id</td>
-                <td>@tarefa.Descrição</td>
-                <td>@tarefa.Categoria.Nome</td>
-                <td>@tarefa.DataInicio</td>
-                <td>@tarefa.DataConclusao</td>
-                <td>Sim</td> <!-- Indicando que a tarefa está concluída -->
-                <td>
-                    <a asp-action="Details" asp-route-id="@tarefa.Id">Detalhes</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <p>
+            <a asp-action="AFazer" class="btn btn-primary">Lista de Tarefas</a>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Data de Início</th>
+                    <th>Data Final</th>
+                    <th>Concluído</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarefa in Model)
+                {
+                    <tr>
+                        <td>@tarefa.Descrição</td>
+                        <td>@tarefa.Categoria.Nome</td>
+                        <td>@tarefa.DataInicio</td>
+                        <td>@tarefa.DataConclusao</td>
+                        <td>Sim</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+</body>
+</html>

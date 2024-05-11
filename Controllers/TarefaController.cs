@@ -5,7 +5,7 @@ namespace TodoList.Controllers
 {
     public class TarefaController : Controller
     {
-        public IActionResult Index()
+        public IActionResult AFazer()
         {
             return View(_tarefas);
         }
@@ -43,6 +43,16 @@ namespace TodoList.Controllers
             {
                 Id = 6,
                 Nome = "Compras"
+            },
+            new CategoriaModel
+            {
+                Id = 7,
+                Nome = "Cozinhar"
+            },
+            new CategoriaModel
+            {
+                Id = 8,
+                Nome = "Cachorros"
             }
         };
 
@@ -53,7 +63,7 @@ namespace TodoList.Controllers
                 Id= 1,
                 Descrição = "Estudar Linq",
                 Categoria = _categorias.FirstOrDefault(c => c.Id == 5),
-                Concluido = false
+                Concluido = true
             },
             new TarefaModel
             {
@@ -67,9 +77,57 @@ namespace TodoList.Controllers
                 Id= 3,
                 Descrição = "Ler e-mails",
                 Categoria = _categorias.FirstOrDefault(c => c.Id == 2),
+                Concluido = true
+            },
+             new TarefaModel
+            {
+                Id= 4,
+                Descrição = "Dar comida pros cachorros",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 8),
+                Concluido = true
+            },
+            new TarefaModel
+            {
+                Id= 5,
+                Descrição = "Estudar Bootstrap",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 5),
                 Concluido = false
             },
-
+             new TarefaModel
+            {
+                Id= 6,
+                Descrição = "Ir para aula de música",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 5),
+                Concluido = false
+            },
+            new TarefaModel
+            {
+                Id= 7,
+                Descrição = "Fazer prova de Sistemas Móveis",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 1),
+                Concluido = false
+            },
+            new TarefaModel
+            {
+                Id= 8,
+                Descrição = "Comprar presente de dia das mães",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 6),
+                Concluido = false
+            },
+            new TarefaModel
+            {
+                Id= 9,
+                Descrição = "Fazer janta",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 7),
+                Concluido = false
+            },
+            new TarefaModel
+            {
+                Id= 10,
+                Descrição = "Enviar projeto 4",
+                Categoria = _categorias.FirstOrDefault(c => c.Id == 1),
+                Concluido = false
+            }
         };
 
         //----------------------------------------------------------------------------------------
@@ -91,7 +149,7 @@ namespace TodoList.Controllers
                 tarefa.Categoria = _categorias.FirstOrDefault(c => c.Id == tarefa.Categoria.Id);
                 _tarefas.Add(tarefa);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AFazer");
         }
 
         //----------------------------------------------------------------------------------------
@@ -121,7 +179,7 @@ namespace TodoList.Controllers
                     existingTarefa.DataConclusao = tarefa.DataConclusao;
                     existingTarefa.Concluido = tarefa.Concluido;
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("AFazer");
             }
             return View(tarefa);
         }
@@ -137,7 +195,7 @@ namespace TodoList.Controllers
                 return NotFound();
             }
             _tarefas.Remove(tarefa);
-            return RedirectToAction("Index");
+            return RedirectToAction("AFazer");
         }
 
         //----------------------------------------------------------------------------------------
@@ -165,7 +223,7 @@ namespace TodoList.Controllers
             {
                 tarefa.Concluido = true;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("AFazer");
         }
 
         //----------------------------------------------------------------------------------------
